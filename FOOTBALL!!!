@@ -1,0 +1,18 @@
+int x = 0;
+int y = 200;
+int w = 300;
+int h = 150;
+void setup()
+{
+size(1078, 720);
+}
+
+void draw()
+{
+background(44, 80, 21);
+strokeWeight(10);
+stroke(200, 100, 10);
+fill(200, 100, 10);
+ellipse(x, y, w, h);
+x=x+200;
+}
