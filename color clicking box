@@ -1,0 +1,25 @@
+int r = 100;
+int g = 200;
+int b = 50;
+void setup()
+{
+  size (500, 600);
+  smooth();
+  background(255);
+}
+void draw(){
+}
+
+  void mousePressed(){
+stroke(0);
+fill(r, g, b);
+rectMode(CENTER);
+rect(mouseX, mouseY, 100, 100);
+noSmooth();
+r = r+5;
+g = g+5;
+b = b+5;
+}
+void keyPressed()
+{
+  background(255);}
