@@ -1,0 +1,67 @@
+Spot[] spots;
+void setup() {
+  size(800, 600);
+  int numSpots = 20; // Number of objects
+  int dia = width/numSpots; // Calculate diameter
+  spots = new Spot[numSpots]; // Create array
+  for (int i = 0; i < spots.length; i++) {
+    float x = dia/2 + i*dia;
+    float rate = random(0.1, 2.0);
+    // Create each object
+    spots[i] = new Spot(x, 50, dia, rate);
+  }
+  noStroke();
+}
+void draw() {
+  float r = random(255);
+float g = random(255);
+float b = random(255);
+float diam = random(100);
+float x = random(width);
+float y = random(height);
+fill(r, g, b);
+y= y-10;
+ellipse(x, y, diam, diam);
+if (mousePressed) {
+    fill(0);
+  } else {
+    fill(255);
+  }
+  ellipse(mouseX, mouseY, 80, 80);
+
+  fill(0, 12);
+  rect(0, 0, width, height);
+  fill(r, g, b);
+  for (int i=0; i < spots.length; i++) {
+    spots[i].move(); // Move each object
+    spots[i].display(); // Display each object
+  }
+}
+class Spot {
+  float x, y;         // X-coordinate, y-coordinate
+  float diameter;     // Diameter of the circle
+  float speed;        // Distance moved each frame
+  int direction = 1;  // Direction of motion (1 is down, -1 is up)
+  
+  // Constructor
+  Spot(float xpos, float ypos, float dia, float sp) {
+    x = xpos;
+    y = ypos;
+    diameter = dia;
+    speed = sp;
+  }
+    
+  void move() {
+    y += (speed * direction/2 * 5); 
+    if ((y > (height - diameter/2)) || (y < diameter/2)) { 
+      direction *= -1; 
+    } 
+  }
+  
+  void display() {
+    ellipse(x, y, diameter, diameter);
+  }
+}
+
+
+
