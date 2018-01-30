@@ -1,0 +1,36 @@
+boolean drawT = false;
+boolean drawB = false;
+
+void setup() {
+  size(100, 100);
+  noStroke();
+} 
+
+void draw() {
+  background(204);
+  
+  if (drawT == true) {
+    background(255);
+  }
+  else if (drawB == true) {
+    background(0);
+  }
+ else{
+   background(204);
+ }
+}
+
+void keyPressed() {
+  if ((key == 'T') || (key == 't')) {
+    drawT = true;
+  }
+   if ((key == 'B') || (key == 'b')){
+     drawB = true;
+   }
+
+}
+
+void keyReleased() {
+  drawT = false;
+  drawB = false;
+}
