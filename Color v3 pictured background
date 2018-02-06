@@ -1,0 +1,99 @@
+boolean drawT = false;
+boolean drawB = false;
+
+
+Spot[] spots;
+void setup() {
+  PImage sunflower = loadImage("sunflower.jpg");
+  size(387, 387);
+  background(sunflower);
+  int numSpots = 25; 
+  int dia = width/numSpots; 
+  spots = new Spot[numSpots]; 
+  for (int i = 0; i < spots.length; i++) {
+    float x = dia/2 + i*dia;
+    float rate = random(0.1, 2.0);
+    
+    spots[i] = new Spot(x, 50, dia, rate);
+  }
+  noStroke();
+}
+void draw() {
+  PImage sunflower = loadImage("sunflower.jpg");
+  PImage good = loadImage("Good.jpg");
+  PImage bad = loadImage("Bad.jpg");
+  if (drawT == true) {
+    background(good);
+  }
+  else if (drawB == true) {
+    background(bad);
+  }
+ else{
+   background(sunflower);
+ }
+  float r = random(255);
+float g = random(255);
+float b = random(255);
+float diam = random(100);
+float x = random(width);
+float y = random(height);
+fill(r, g, b);
+y= y-10;
+ellipse(x, y, diam, diam);
+if (mousePressed) {
+    fill(0);
+  } else {
+    fill(255);
+  }
+  ellipse(mouseX, mouseY, 80, 80);
+
+  fill(0, 12);
+  rect(0, 0, width, height);
+  fill(r, g, b);
+  for (int i=0; i < spots.length; i++) {
+    spots[i].move(); 
+    spots[i].display(); 
+  }
+}
+class Spot {
+  float x, y;         
+  float diameter;     
+  float speed;        
+  int direction = 1;  
+  
+  
+  Spot(float xpos, float ypos, float dia, float sp) {
+    x = xpos;
+    y = ypos;
+    diameter = dia;
+    speed = sp;
+  }
+    
+  void move() {
+    y += (speed * direction/2 * 5); 
+    if ((y > (height - diameter/2)) || (y < diameter/2)) { 
+      direction *= -1; 
+    } 
+  }
+  
+  void display() {
+    ellipse(x, y, diameter, diameter);
+  }
+}
+
+
+
+void keyPressed() {
+  if ((key == 'T') || (key == 't')) {
+    drawT = true;
+  }
+   if ((key == 'B') || (key == 'b')){
+     drawB = true;
+   }
+
+}
+
+void keyReleased() {
+  drawT = false;
+  drawB = false;
+}
