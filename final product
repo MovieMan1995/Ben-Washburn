@@ -1,0 +1,258 @@
+//first sensor
+#define trigPin1 8
+#define echoPin1 9
+#define LED_first_ping 12
+#define buzzer 5
+
+//second sensor
+#define trigPin2 10
+#define echoPin2 11
+#define LED_second_ping 13
+#define buzzer2 6
+
+#define trigPin3 37
+#define echoPin3 35
+#define LED_third_ping 28
+#define buzzer3 23
+
+#define trigPin4 33
+#define echoPin4 31
+#define LED_fourth_ping 27
+#define buzzer4 25
+
+#define trigPin00 53
+#define echoPin00 51
+#define LED_fifth_ping 43
+#define buzzer00 41
+
+#define trigPin000 49
+#define echoPin000 47
+#define LED_sixth_ping 45
+#define buzzer000 39
+
+long duration, distance, Ultrasensor1, Ultrasensor2, Ultrasensor3, Ultrasensor4, Ultrasensor00, Ultrasensor000;
+
+char data;
+
+String SerialData="";
+
+void setup()
+{
+  Serial.begin (9600);
+
+//first sensor setup
+  pinMode(trigPin1, OUTPUT);
+  pinMode(echoPin1, INPUT);
+  pinMode(LED_first_ping , OUTPUT);
+  pinMode(buzzer, OUTPUT);
+
+//second sensor
+  pinMode(trigPin2, OUTPUT);
+  pinMode(echoPin2, INPUT);
+  pinMode(LED_second_ping , OUTPUT);
+  pinMode(buzzer2, OUTPUT);
+
+//third sensor
+  pinMode(trigPin3, OUTPUT);
+  pinMode(echoPin3, INPUT);
+  pinMode(LED_third_ping , OUTPUT);
+  pinMode(buzzer3, OUTPUT);
+
+//fourth sensor
+pinMode(trigPin4, OUTPUT);
+  pinMode(echoPin4, INPUT);
+  pinMode(LED_fourth_ping , OUTPUT);
+  pinMode(buzzer4, OUTPUT);
+
+  //fifth sensor
+  pinMode(trigPin00, OUTPUT);
+  pinMode(echoPin00, INPUT);
+  pinMode(LED_fifth_ping , OUTPUT);
+  pinMode(buzzer00, OUTPUT);
+
+//sixth sensor
+pinMode(trigPin000, OUTPUT);
+  pinMode(echoPin000, INPUT);
+  pinMode(LED_sixth_ping , OUTPUT);
+  pinMode(buzzer000, OUTPUT);
+
+
+
+  digitalWrite(LED_first_ping , LOW);
+  digitalWrite(buzzer, LOW);
+  digitalWrite(LED_second_ping , LOW);
+  digitalWrite(buzzer2, LOW);
+  digitalWrite(LED_third_ping , LOW);
+  digitalWrite(buzzer3, LOW);
+  digitalWrite(LED_fourth_ping , LOW);
+  digitalWrite(buzzer4, LOW);
+   digitalWrite(LED_fifth_ping , LOW);
+  digitalWrite(buzzer00, LOW);
+  digitalWrite(LED_sixth_ping , LOW);
+  digitalWrite(buzzer000, LOW);
+  
+  
+}
+
+
+void loop()
+{
+
+  SonarSensor(trigPin1, echoPin1);
+  Ultrasensor1 = distance;
+  SonarSensor(trigPin2, echoPin2);
+  Ultrasensor2 = distance;
+  SonarSensor(trigPin3, echoPin3);
+  Ultrasensor3 = distance;
+  SonarSensor(trigPin4, echoPin4);
+  Ultrasensor4 = distance;
+  SonarSensor(trigPin00, echoPin00);
+  Ultrasensor00 = distance;
+  SonarSensor(trigPin000, echoPin000);
+  Ultrasensor000 = distance;
+
+
+  
+  while(Serial.available())
+  {
+    delay(10);
+    data=Serial.read();
+    SerialData+=data;
+  }
+
+  if(SerialData=="display distance")
+  {
+
+    //display for first sensor
+    Serial.println("distance measured by the first sensor: ");
+    Serial.print(Ultrasensor1);
+    Serial.print(" cm");
+
+    //display for second sensor
+    Serial.println("distance measured by the second sensor: ");
+    Serial.print(Ultrasensor2);
+    Serial.print(" cm");
+
+     //display for third sensor
+    Serial.println("distance measured by the third sensor: ");
+    Serial.print(Ultrasensor3);
+    Serial.print(" cm");
+
+     //display for fourth sensor
+    Serial.println("distance measured by the fourth sensor: ");
+    Serial.print(Ultrasensor4);
+    Serial.print(" cm");
+
+//display for fifth sensor
+    Serial.println("distance measured by the third sensor: ");
+    Serial.print(Ultrasensor00);
+    Serial.print(" cm");
+
+     //display for sixth sensor
+    Serial.println("distance measured by the fourth sensor: ");
+    Serial.print(Ultrasensor000);
+    Serial.print(" cm");
+   
+  }
+
+  SerialData="";
+
+  if(Ultrasensor1 <=10)
+  {
+    digitalWrite(LED_first_ping, HIGH);
+    digitalWrite(buzzer, HIGH);
+    tone(5, 294); 
+  }
+  else
+  {
+    digitalWrite(LED_first_ping, LOW);
+    digitalWrite(buzzer, LOW);
+    noTone(5);
+   
+  }
+
+if(Ultrasensor2 <=10)
+  {
+    digitalWrite(LED_second_ping, HIGH);
+    digitalWrite(buzzer2, HIGH);
+    tone(6, 311);
+  }
+  else
+  {
+    digitalWrite(LED_second_ping, LOW);
+    digitalWrite(buzzer2, LOW);
+    noTone(6);
+   
+  }
+
+  if(Ultrasensor3 <=10)
+  {
+    digitalWrite(LED_third_ping, HIGH);
+    digitalWrite(buzzer3, HIGH);
+    tone(23, 330);
+  }
+  else
+  {
+    digitalWrite(LED_third_ping, LOW);
+    digitalWrite(buzzer3, LOW);
+    noTone(23);
+   
+  }
+
+  if(Ultrasensor4 <=10)
+  {
+    digitalWrite(LED_fourth_ping, HIGH);
+    digitalWrite(buzzer4, HIGH);
+    tone(25, 349);
+  }
+  else
+  {
+    digitalWrite(LED_fourth_ping, LOW);
+    digitalWrite(buzzer4, LOW);
+    noTone(25);
+   
+  }
+
+  if(Ultrasensor00 <=10)
+  {
+    digitalWrite(LED_fifth_ping, HIGH);
+    digitalWrite(buzzer00, HIGH);
+    tone(41, 370);
+  }
+  else
+  {
+    digitalWrite(LED_fifth_ping, LOW);
+    digitalWrite(buzzer00, LOW);
+    noTone(41);
+   
+  }
+
+  if(Ultrasensor000 <=10)
+  {
+    digitalWrite(LED_sixth_ping, HIGH);
+    digitalWrite(buzzer000, HIGH);
+    tone(39, 392);
+  }
+  else
+  {
+    digitalWrite(LED_sixth_ping, LOW);
+    digitalWrite(buzzer000, LOW);
+    noTone(39);
+   
+  }
+
+  
+}
+
+void SonarSensor(int trigPinSensor, int echoPinSensor)
+{
+  digitalWrite(trigPinSensor, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPinSensor, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPinSensor, LOW);
+
+duration = pulseIn(echoPinSensor, HIGH);
+distance= (duration/2) / 35;
+
+}
